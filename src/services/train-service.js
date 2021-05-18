@@ -1,5 +1,6 @@
 export default class TrainService{
     constructor(){
+        //this.uri = "http://localhost:8880/";
         this.trains=[
             {tcode:123,name:"Rajdhani exp",source:"Mumbai",destiny:"Delhi"},
             {tcode:124,name:"Deccan Queen",source:"Pune",destiny:"Mumbai"},

@@ -9,7 +9,7 @@ export default class NewTrain extends Component{
             tcode:0,
             name:'',
             source:'',
-            destiny:''
+            destination:''
         }
     }
 
@@ -48,7 +48,7 @@ export default class NewTrain extends Component{
                     </tr>
                     <tr>
                         <td>Destination</td>
-                        <td><input name="destiny" value={this.state.destiny} required onChange={this.handleInput} /></td>
+                        <td><input name="destination" value={this.state.destination} required onChange={this.handleInput} /></td>
                     </tr>
                     <tr>
                         <td><button class="btn btn-success" onClick={()=>this.onSave()}>Save train</button></td>

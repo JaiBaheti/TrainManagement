@@ -9,7 +9,7 @@ export default class EditTrain extends Component{
             tcode:props.train.tcode,
             name:props.train.name,
             source:props.train.source,
-            destiny:props.train.destiny
+            destination:props.train.destination
         }
     }
 
@@ -48,7 +48,7 @@ export default class EditTrain extends Component{
                     </tr>
                     <tr>
                         <td>Destination</td>
-                        <td><input name="destiny" value={this.state.destiny} required onChange={this.handleInput} /></td>
+                        <td><input name="destination" value={this.state.destination} required onChange={this.handleInput} /></td>
                     </tr>
                     <tr>
                         <td><button class="btn btn-success" onClick={()=>this.onUpdate()}>Update train</button></td>

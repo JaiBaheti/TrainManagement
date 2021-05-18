@@ -1,5 +1,6 @@
 import {Component} from "react";
 import TrainService from "../services/train-service";
+import { TrainRestService } from "../services/trainRestService";
 import EditTrain from "./edit-train";
 import NewTrain from "./newTrain";
 import TrainDetails from "./train-details";
@@ -8,6 +9,7 @@ export default class ListTrains extends Component{
         constructor(props){
             super(props);
             this.service=new TrainService();
+            this.srv = new TrainRestService();
             this.onDeleteTrain=this.onDeleteTrain.bind(this);
             this.state={
                 showDetails:false,
@@ -18,13 +20,40 @@ export default class ListTrains extends Component{
         }
 
         componentDidMount(){
-           this.setState({trains:this.service.getTrains()});
+            //this.setState({trains:this.service.getTrains()});
+            this.getTrains();
         }
-
+        getTrains() {
+            this.srv.getTrains().then(rails => {
+                console.log(rails);
+                this.setState({trains:rails});
+                console.log("Component Mount");
+                console.log(this.state.trains);
+            });
+        }
+        // async getTrains(){
+        //     await fetch(this.uri+"/trains").then(response =>{
+        //         if(!response.ok){
+        //             this.handleResponseError(response);
+        //         }
+        //         return response.json();
+        //     }).then( data => {
+        //         console.log(data);
+        //         this.setState({trains : data});
+        //     }).catch(error => {
+        //         console.log(error);
+        //     });
+        // }
         onSelect(tcode){
-                this.setState({
-                    showDetails:true,
-                    selectedTrain:this.service.getTrainByCode(tcode)
+                // this.setState({
+                //     showDetails:true,
+                //     selectedTrain:this.service.getTrainByCode(tcode)
+                // });
+                this.srv.getTrainByCode(tcode).then(rails =>{
+                    this.setState({
+                        showDetails:true,
+                        selectedTrain:rails
+                    });
                 });
                 
         }
@@ -39,9 +68,11 @@ export default class ListTrains extends Component{
         }
         onDeleteTrain(tcode){
             this.clearState();
-                this.service.deleteTrain(tcode);
-                this.setState({trains:this.service.getTrains()});
-              
+            // this.service.deleteTrain(tcode);
+            // this.setState({trains:this.service.getTrains()});
+            this.srv.deleteTrain(tcode).then(response => {
+                this.getTrains();
+            });
         }
 
         onNewTrain(){
@@ -53,8 +84,11 @@ export default class ListTrains extends Component{
 
         onCreateTrain = (train) =>{
             this.clearState();
-            this.service.saveTrain(train);
-            this.setState({trains:this.service.getTrains()});
+            // this.service.saveTrain(train);
+            // this.setState({trains:this.service.getTrains()});
+            this.srv.saveTrain(train).then(response => {
+                this.getTrains();
+            });
         }
 
         onCancel = ()=>{
@@ -114,7 +148,10 @@ export default class ListTrains extends Component{
 
         onUpdateTrain=(train)=>{
             this.clearState();
-            this.service.updateTrain(train);
-            this.setState({trains:this.service.getTrains()});
+            // this.service.updateTrain(train);
+            // this.setState({trains:this.service.getTrains()});
+            this.srv.updateTrain(train).then(response => {
+                this.getTrains();
+            });
         }
 }
